@@ -1,68 +1,73 @@
 #!/usr/bin/python3
 #-*-coding:utf-8-*-
 
-author = "HBN"
-date = "27.03.2020"
+author = "www.hasanbaskin.com"
+date = "April 2020"
 
-ust = """
+top = """
 # =========================================================================|
 #		This Script is Created Only for Personel Using
 # =========================================================================|"""
 
-alt = """
+undr = """
 # =========================================================================|
-#		Created By HBN  	Version: V.1
+#		Created By HBN  	Version: 0.2
 # =========================================================================|"""
 
+banner =r"""
+ _     _                 _ _ _                          
+| |__ | |__  _ __       | (_) |__  _ __ __ _ _ __ _   _ 
+| '_ \| '_ \| '_ \ _____| | | '_ \| '__/ _` | '__| | | |
+| | | | |_) | | | |_____| | | |_) | | | (_| | |  | |_| |
+|_| |_|_.__/|_| |_|     |_|_|_.__/|_|  \__,_|_|   \__, |
+                                                  |___/ 
+"""
 
 import os 
 import re
 import csv
 import os
 
-#Renk Kodları
-yesil = "\033[32m"
+#Color Codes
+green = "\033[32m"
 red = "\033[1;31m"
-sari = "\033[93m"
-mavi = "\033[36m"
+yellow = "\033[93m"
+blue = "\033[36m"
 default = "\033[0m"
 
 
-print(ust)
-os.system("figlet HBN-LIBRARY")
-print(alt)
+print(top)
+print("\t"+banner)
+print(undr)
 
-# Yeni kitap eklenmesini sağlayacak.
-# Eklenecek olan kitap var mı diye önce kontrol edilecek.
-
+# Add to new book.
+# Have a book control.
 def new_registry():
-	print(mavi+"\n\t\t>> Yeni Kayıt Sistemine Hoşgeldiniz <<"+default)
+	print(blue+"\n\t\t>> Yeni Kayıt Sistemine Hoşgeldiniz <<"+default)
 	while True:
-		_book_name_ = input(sari+"\n[?]"+default+"..Kitap Adı: ")
+		_book_name_ = input(yellow+"\n[?]"+default+"..Kitap Adı: ")
 		if book_controller(_book_name_):
 			print("\nGirilen kitap daha önce kayıt edilmiş.\n")
 			book_show("uniq",_book_name_)
 		else:
-			print(yesil+"[+]"+default)
+			print(green+"[+]"+default)
 			break
-	_novelist_ = input(sari+"[?]"+default+"..Yazar Adı: ")
-	print(yesil+"[+]"+default)
-	_publisher_ = input(sari+"[?]"+default+"..Yayınevinin Adı: ")
-	print(yesil+"[+]"+default)
-	_finish_time_ = input(sari+"[?]"+default+"..Bitirme Tarihi: ")
-	print(yesil+"[+]"+default)
+	_novelist_ = input(yellow+"[?]"+default+"..Yazar Adı: ")
+	print(green+"[+]"+default)
+	_publisher_ = input(yellow+"[?]"+default+"..Yayınevinin Adı: ")
+	print(green+"[+]"+default)
+	_finish_time_ = input(yellow+"[?]"+default+"..Bitirme Tarihi: ")
+	print(green+"[+]"+default)
 
 
 	with open("database.csv","a+") as registry:
 
 		registry.write("kitap_adi:{},novelist:{},publisher:{},finishtime:{}\n".format(_book_name_,_novelist_,_publisher_,_finish_time_))
 		registry.flush()
-		print(yesil+"\nYeni Kayıt İşlemi Başarıyla Tamamlandı.\n"+default)
+		print(green+"\nYeni Kayıt İşlemi Başarıyla Tamamlandı.\n"+default)
 
 
-# Tek kitap sorgulandığında gösterilecek.
-# Tüm kitaplar sorgulanırsa tüm kitapları ekrana basacak. 2  bölümden oluşması gerekli.
-
+# Uniq book controller
 def book_show(type, book):
 
 	with open("database.csv") as csvfile:
@@ -73,7 +78,6 @@ def book_show(type, book):
 			listLines.append(data)
 
 		if type == "uniq":
-
 						
 			for i in range(0,len(listLines)):
 				column = listLines[i]
@@ -84,19 +88,18 @@ def book_show(type, book):
 					tmp, novelistName = b.split(":")
 					tmp, publisherName = c.split(":")
 					tmp, finishTime = d.split(":")
-					print(red+"\nKitap Bilgileri\n" +sari+ "-"*23+default)
+					print(red+"\nKitap Bilgileri\n" +yellow+ "-"*23+default)
 					print("Kitap Adı: " + book_name)
 					print("Yazarı: " + novelistName)
 					print("Yayınevi: " + publisherName)
 					print("Bitirme Tarihi: " + finishTime)
 					print("-"*25)
-
 					pass
 				
 
 		if type == "all":
 			sayac = 0
-			print(mavi+"\n\n Tüm Kitapların Detaylı Listesi\n"+"-"*32+default)
+			print(blue+"\n\n Tüm Kitapların Detaylı Listesi\n"+"-"*32+default)
 			for i in range(0,len(listLines)):
 				column = listLines[i]
 				a,b,c,d = column[0].split(",")
@@ -105,31 +108,30 @@ def book_show(type, book):
 				tmp, novelistName = b.split(":")
 				tmp, publisherName = c.split(":")
 				tmp, finishTime = d.split(":")
-				print("\n"+ red + book_name +default+ " Kitabına Ait Bilgiler\n" + sari + "-"*27 + default)
+				print("\n"+ red + book_name +default+ " Kitabına Ait Bilgiler\n" + yellow + "-"*27 + default)
 #				print("Kitap Adı: " + book_name)
 				print("Yazarı: " + novelistName)
 				print("Yayınevi: " + publisherName)
 				print("Bitirme Tarihi: " + finishTime)
 				print("-"*25)
 			
-			print(yesil+"\n[+].."+default+"Toplam " + sari + str(sayac) + default + " adet kitap bulundu.\n")
+			print(green+"\n[+].."+default+"Toplam " + yellow + str(sayac) + default + " adet kitap bulundu.\n")
 	
 
 
 		if type == "list":
 			sayac = 0
-			print(mavi+"\n\n Tüm Kitapların Listesi\n"+"-"*25+default)
+			print(blue+"\n\n Tüm Kitapların Listesi\n"+"-"*25+default)
 			for i in range(0,len(listLines)):
 				column = listLines[i]
 				a,b,c,d = column[0].split(",")
 				tmp, book_name = a.split(":")
 				sayac+=1
-				print(sari+str(sayac)+") " + default + book_name)
+				print(yellow+str(sayac)+") " + default + book_name)
 
-			print(yesil+"\n[+].."+default+"Toplam " + sari + str(sayac) + default + " adet kitap bulundu.\n")
+			print(green+"\n[+].."+default+"Toplam " + yellow + str(sayac) + default + " adet kitap bulundu.\n")
 
-#Kitap eklemeden önce kontrol et.(var/yok)
-#Doğrudan kitap sorgulamada kullan --> Kitabın özellikleri çağrılacak book_show()'a gidecek. 
+#Check before adding books.(Yes/No) 
 def book_controller(book_name):
 
 	with open("database.csv") as csvfile:
@@ -138,8 +140,7 @@ def book_controller(book_name):
 		listLines = []
 
 		for line in dataCaptured:
-			listLines.append(line)
-			
+			listLines.append(line)			
 
 
 		for i in range (0,len(listLines)):
@@ -147,18 +148,17 @@ def book_controller(book_name):
 			a,b,c,d = column[0].split(",")
 			tmp,kitap_adi = a.split(":")
 			if book_name == kitap_adi:
-				return True
-			
+				return True		
 				
 
 
 def main():
 	
-	print(mavi + "\n\t >> Lütfen Menüden Yapmak İstediğiniz İşlemi Seçiniz <<" + default)
-	print(sari+"\n[1]"+default+"..Yeni Kitap Ekle")
-	print(sari+"[2]"+default+"..Kitap Sorgula")
-	print(sari+"[3]"+default+"..Tüm Kitapları Göster [Detaylı]")
-	print(sari+"[4]"+default+"..Tüm Kitapları Göster [Liste]")
+	print(blue + "\n\t >> Lütfen Menüden Yapmak İstediğiniz İşlemi Seçiniz <<" + default)
+	print(yellow+"\n[1]"+default+"..Yeni Kitap Ekle")
+	print(yellow+"[2]"+default+"..Kitap Sorgula")
+	print(yellow+"[3]"+default+"..Tüm Kitapları Göster [Detaylı]")
+	print(yellow+"[4]"+default+"..Tüm Kitapları Göster [Liste]")
 
 	islem = input(red + "\n[?]" + default + "..Seçenek Numarası : ")
 
@@ -166,9 +166,9 @@ def main():
 		new_registry()
 
 	elif islem == "2":
-		bookName = input(sari + "\n[?]" + default + "..Aramak İstediğiniz Kitabın Adını Giriniz : ")
+		bookName = input(yellow + "\n[?]" + default + "..Aramak İstediğiniz Kitabın Adını Giriniz : ")
 		if book_controller(bookName):
-			print(yesil + "\n[+] " + default + "Kitap Bulundu.\n")
+			print(green + "\n[+] " + default + "Kitap Bulundu.\n")
 			book_show("uniq",bookName)
 		else:
 			print(red + "\n\tAradığınız Kitap Bulunamadı.\n" + default)
@@ -183,24 +183,22 @@ def main():
 		print(red+"\n\t!!Hatalı Giriş Yaptınız !!\n"+default)
 
 
-#start the program and return program
+#start the program and loop
 
 erlik = True
 while (erlik == True):
 	main()
-	_reply_ = input(sari+"\n\t[?]"+default+"..Yeni İşlem Yapmak İstiyormusunuz ? [E/H]  ")
+	_reply_ = input(yellow+"\n\t[?]"+default+"..Yeni İşlem Yapmak İstiyormusunuz ? [E/H]  ")
 	if (_reply_ == 'e') | (_reply_ == 'E'):
 		os.system("clear")
 		erlik = True
 		print("\n")
 	elif (_reply_ == 'h') | (_reply_ == 'H'):
 		erlik = False
-		print(yesil+"\n\t[+]"+default+"...Program Başarıyla Sonlandırıldı..."+yesil+"[+]\n"+default)
-		print(sari+"\n\t\t[>>]"+default+"...Created By HBN..."+sari+"[<<]\n"+default)
+		print(green+"\n\t[+]"+default+"...Program Başarıyla Sonlandırıldı..."+green+"[+]\n"+default)
+		print(yellow+"\n\t\t[>>]"+default+"...Created By HBN..."+yellow+"[<<]\n"+default)
 
 	else:
 		print(red+"\n\n\tHatalı Giriş Yaptınız, Program Sonlandırıldı.\n"+default)
-		print(sari+"\n\t\t[>>]"+default+"...Created By HBN..."+sari+"[<<]\n"+default)
+		print(yellow+"\n\t\t[>>]"+default+"...Created By HBN..."+yellow+"[<<]\n"+default)
 		erlik = False
-
-
